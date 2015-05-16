@@ -1,0 +1,21 @@
+security:
+    providers:
+        rest_provider:
+            id: rest.user_provider
+
+    firewalls:
+        wsse_secured:
+            pattern:   /api/.*
+            stateless: true
+            provider: rest_provider
+
+    access_control:
+        - { path: ^/api/session$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/user, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/user/reset, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/admin/, role: ROLE_ADMIN }
+        - { path: ^/api/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN

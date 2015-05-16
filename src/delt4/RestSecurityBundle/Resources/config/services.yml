@@ -1,0 +1,16 @@
+services:
+
+    rest.user_provider:
+        class: delt4\RestSecurityBundle\Security\User\RestUserProvider
+        arguments: [ @doctrine.orm.default_entity_manager, "delt4\RestSecurityBundle\Entity\User" ]
+
+    rest.security.authentication.provider:
+        class: delt4\RestSecurityBundle\Security\Authentication\RestAuthenticationProvider
+        arguments: ["", "%delt4_api_key%"]
+
+    rest.security.authentication.listener:
+        class: delt4\RestSecurityBundle\Security\Firewall\RestSecurityListener
+        arguments: ["@security.token_storage", "@security.authentication.manager", "%delt4_api_key%"]
+#    delt4_rest_security.example:
+#        class: delt4\RestSecurityBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
